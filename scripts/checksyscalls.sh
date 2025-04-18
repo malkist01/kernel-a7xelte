@@ -15,35 +15,35 @@ cat << EOF
 #include <asm/unistd.h>
 
 /* *at */
-#define __IGNORE_open		/* openat */
-#define __IGNORE_link		/* linkat */
-#define __IGNORE_unlink		/* unlinkat */
-#define __IGNORE_mknod		/* mknodat */
-#define __IGNORE_chmod		/* fchmodat */
-#define __IGNORE_chown		/* fchownat */
-#define __IGNORE_mkdir		/* mkdirat */
-#define __IGNORE_rmdir		/* unlinkat */
-#define __IGNORE_lchown		/* fchownat */
-#define __IGNORE_access		/* faccessat */
-#define __IGNORE_rename		/* renameat */
-#define __IGNORE_readlink	/* readlinkat */
-#define __IGNORE_symlink	/* symlinkat */
-#define __IGNORE_utimes		/* futimesat */
+#define __IGNORE_open                /* openat */
+#define __IGNORE_link                /* linkat */
+#define __IGNORE_unlink                /* unlinkat */
+#define __IGNORE_mknod                /* mknodat */
+#define __IGNORE_chmod                /* fchmodat */
+#define __IGNORE_chown                /* fchownat */
+#define __IGNORE_mkdir                /* mkdirat */
+#define __IGNORE_rmdir                /* unlinkat */
+#define __IGNORE_lchown                /* fchownat */
+#define __IGNORE_access                /* faccessat */
+#define __IGNORE_rename                /* renameat */
+#define __IGNORE_readlink        /* readlinkat */
+#define __IGNORE_symlink        /* symlinkat */
+#define __IGNORE_utimes                /* futimesat */
 #if BITS_PER_LONG == 64
-#define __IGNORE_stat		/* fstatat */
-#define __IGNORE_lstat		/* fstatat */
+#define __IGNORE_stat                /* fstatat */
+#define __IGNORE_lstat                /* fstatat */
 #else
-#define __IGNORE_stat64		/* fstatat64 */
-#define __IGNORE_lstat64	/* fstatat64 */
+#define __IGNORE_stat64                /* fstatat64 */
+#define __IGNORE_lstat64        /* fstatat64 */
 #endif
 
 /* CLOEXEC flag */
-#define __IGNORE_pipe		/* pipe2 */
-#define __IGNORE_dup2		/* dup3 */
-#define __IGNORE_epoll_create	/* epoll_create1 */
-#define __IGNORE_inotify_init	/* inotify_init1 */
-#define __IGNORE_eventfd	/* eventfd2 */
-#define __IGNORE_signalfd	/* signalfd4 */
+#define __IGNORE_pipe                /* pipe2 */
+#define __IGNORE_dup2                /* dup3 */
+#define __IGNORE_epoll_create        /* epoll_create1 */
+#define __IGNORE_inotify_init        /* inotify_init1 */
+#define __IGNORE_eventfd        /* eventfd2 */
+#define __IGNORE_signalfd        /* signalfd4 */
 
 /* MMU */
 #ifndef CONFIG_MMU
@@ -168,21 +168,21 @@ cat << EOF
 #define __IGNORE_setfsgid32
 
 /* these can be expressed using other calls */
-#define __IGNORE_alarm		/* setitimer */
-#define __IGNORE_creat		/* open */
-#define __IGNORE_fork		/* clone */
-#define __IGNORE_futimesat	/* utimensat */
-#define __IGNORE_getpgrp	/* getpgid */
-#define __IGNORE_getdents	/* getdents64 */
-#define __IGNORE_pause		/* sigsuspend */
-#define __IGNORE_poll		/* ppoll */
-#define __IGNORE_select		/* pselect6 */
-#define __IGNORE_epoll_wait	/* epoll_pwait */
-#define __IGNORE_time		/* gettimeofday */
-#define __IGNORE_uname		/* newuname */
-#define __IGNORE_ustat		/* statfs */
-#define __IGNORE_utime		/* utimes */
-#define __IGNORE_vfork		/* clone */
+#define __IGNORE_alarm                /* setitimer */
+#define __IGNORE_creat                /* open */
+#define __IGNORE_fork                /* clone */
+#define __IGNORE_futimesat        /* utimensat */
+#define __IGNORE_getpgrp        /* getpgid */
+#define __IGNORE_getdents        /* getdents64 */
+#define __IGNORE_pause                /* sigsuspend */
+#define __IGNORE_poll                /* ppoll */
+#define __IGNORE_select                /* pselect6 */
+#define __IGNORE_epoll_wait        /* epoll_pwait */
+#define __IGNORE_time                /* gettimeofday */
+#define __IGNORE_uname                /* newuname */
+#define __IGNORE_ustat                /* statfs */
+#define __IGNORE_utime                /* utimes */
+#define __IGNORE_vfork                /* clone */
 
 /* sync_file_range had a stupid ABI. Allow sync_file_range2 instead */
 #ifdef __NR_sync_file_range2
@@ -199,13 +199,13 @@ EOF
 
 syscall_list() {
     grep '^[0-9]' "$1" | sort -n | (
-	while read nr abi name entry ; do
-	    cat <<EOF
+        while read nr abi name entry ; do
+            cat <<EOF
 #if !defined(__NR_${name}) && !defined(__IGNORE_${name})
 #warning syscall ${name} not implemented
 #endif
 EOF
-	done
+        done
     )
 }
 
